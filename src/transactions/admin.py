@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from transactions.models import Category, Tag, Transaction
+
+admin.site.register(Transaction)
+admin.site.register(Tag)
+admin.site.register(Category)
