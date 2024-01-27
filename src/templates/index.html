@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block additional_head %}
+    <link href="{% static 'css/index.scss' %}" rel="stylesheet">
+{% endblock additional_head %}
+
+{% block main %}
+    {% if user.is_authenticated %}
+        <section class="hero is-primary is-fullheight">
+            <div class="hero-body">
+                <div class="container box">
+                    <div class="columns is-centered">
+                        <div class="column is-8-tablet is-8-desktop is-8-widescreen">
+                            <form action="{% url 'transactions:create_transaction' %}" method="post" class="">
+                                {% csrf_token %}
+                                <div class="field has-addons has-addons-centered">
+                                    <p class="control">
+                                        <span class="select">
+                                            <select name="wallet" id="item-type-input">
+                                                {% for wallet in wallets %}
+                                                    <option value="{{ wallet.id }}">{{ wallet }}</option>
+                                                {% endfor %}
+                                                <option id="create-wallet-option"
+                                                        value="{% url 'wallets:create_wallet' %}">Create a new one</option>
+
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <span class="select">
+                                            <select name="category"
+                                                    id="item-type-input"> {% for category in categories %}
+                                                <option value="{{ category.id }}">{{ category }}</option> {% endfor %} </select>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="field has-addons has-addons-centered">
+                                    <p class="control is-expanded">
+                                        <input name="description" class="input" type="text" placeholder="Activity"
+                                               id="item-name-input"/>
+                                    </p>
+                                    <div class="control has-icons-left">
+                                        <input name="amount" class="input" size="2" type="text" placeholder=""
+                                               id="item-money-input"/>
+                                        <span class="icon is-small is-left">{{ wallet_sign }}</span>
+                                    </div>
+                                    <div class="field has-addons has-addons-centered">
+                                        <p class="control">
+                                            <button type="submit" class="button is-success" id="submit-credit">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                            </button>
+                                        </p>
+                                        <p class="control">
+                                            <button type="submit" class="button is-danger" id="submit-debit">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-minus"></i>
+                                                </span>
+                                            </button>
+                                        </p>
+                                    </div>
+
+                                    <input type="hidden" name="type" id="transaction-type">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="columns is-centered is-vcentered" id="total-budget-div">
+                        <div class="column has-text-centered">
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading">
+                                        <strong>Total Balance</strong>
+                                    </p>
+                                    <p class="title has-text-black">
+                                        <span id="sign">{{ wallet_sign }}</span>
+                                        <span id="final-credit">{{ wallet_balance }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="columns is-centered" id="credit-debit-divs">
+                        <div class="column" id="credit-parent-div">
+                            <div class="has-text-centered" id="credit-div">
+                                <div class="columns grid-columns">
+                                    <div class="column grid-column">
+                                        <div class="table-container">
+                                            <table id="transactions-table"
+                                                   class="table is-striped is-narrow is-hoverable is-fullwidth">
+                                                <tbody id="credit-tbody">
+                                                {% for transaction in transactions %}
+                                                    <tr>
+                                                        <td> {{ transaction.category }} </td>
+                                                        <td> {{ transaction.description }} </td>
+                                                        <td class="has-text-right">
+                                                            {{ transaction.wallet.currency.sign }}{{ transaction.amount }} </td>
+                                                        <td class="has-text-right">
+                                                            <span class="icon remove-button">
+                                                                <a href="#">
+                                                                    <i class="fas fa-minus-square"></i>
+                                                                </a>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% else %}
+        <section class="hero is-large">
+            <div class="hero-body">
+                <div class="container">
+                    <img src="images/budget-tracker-hero.jpg" alt="Budget Tracker Hero Image" class="hero-image">
+                    <h1 class="title">Master Your Finances, Effortlessly</h1>
+                    <p class="subtitle">Track your spending, create budgets, and achieve your financial goals with
+                        ease.</p>
+                    <div class="buttons">
+                        <a href="/signup" class="button is-primary is-large">Start Now, It's Free</a>
+                        <a href="/features" class="button is-outlined is-large">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="columns">
+                <div class="column">
+                    <h2 class="title">Gain Financial Clarity</h2>
+                    <p>See where your money goes, identify spending patterns, and make informed decisions to reach
+                        your financial goals.</p>
+                    <ul>
+                        <li>Track income and expenses effortlessly</li>
+                        <li>Categorize transactions for better insights</li>
+                        <li>Generate insightful reports and charts</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h2 class="title">Take Control of Your Budget</h2>
+                    <p>Set realistic spending limits, track progress, and stay on track with your financial
+                        plans.</p>
+                    <ul>
+                        <li>Create and manage personalized budgets</li>
+                        <li>Receive alerts for potential overspending</li>
+                        <li>Visualize your progress with charts and graphs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section is-small">
+                <h2 class="title has-text-centered">Join Thousands of Satisfied Users</h2>
+                <div class="container">
+                    <div class="columns">
+                        <div class="column">
+                            <blockquote>
+                                <p>"This app has helped me save hundreds of dollars each month. It's so easy to use
+                                    and keeps me accountable for my spending." - Jessica K.</p>
+                            </blockquote>
+                        </div>
+                        <div class="column">
+                            <blockquote>
+                                <p>"Finally, a budgeting tool that doesn't make me feel overwhelmed. I love the
+                                    visual reports and the ability to set realistic goals." - Mark S.</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock main %}
+
+{% block additional_scripts %}
+    <script src="{% static 'js/index.js' %}"></script>
+{% endblock additional_scripts %}
