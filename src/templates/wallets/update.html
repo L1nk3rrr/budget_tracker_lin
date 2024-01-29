@@ -5,13 +5,13 @@
     <section class="hero is-primary">
         <div class="hero-body">
             <div class="container box">
-                <h1 class="title is-1 has-text-black has-text-centered"><b>Create Wallet</b></h1>
+                <h1 class="title is-1 has-text-black has-text-centered"><b>Update Wallet</b></h1>
                 <form method="POST" class="form">
                     {% csrf_token %}
                     {% include "utils/form_field.html" with form=form %}
                     <div class="field is-grouped">
                         <div class="control">
-                            <button class="button is-success" type="submit">Create</button>
+                            <button class="button is-success" type="submit">Update</button>
                         </div>
                         <div class="control">
                             <a href="{% url 'core:index' %}" class="button is-text">Cancel</a>

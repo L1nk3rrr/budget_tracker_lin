@@ -1,0 +1,24 @@
+{% load widget_tweaks %}
+{% for field in form %}
+    <div class="field">
+        {% if field.field.widget.input_type == 'checkbox' %}
+            <label class="checkbox">
+                <div class="field is-grouped">
+                    {{ field }} <b style="margin-left: 0.2em">{{ field.label }}</b>
+                </div>
+                {% if field.errors %}
+                    <span class="help is-danger">{{ field.errors }}</span>
+                {% endif %}
+            </label>
+
+        {% else %}
+            <label class="label">{{ field.label }}</label>
+            <div class="control">
+                {% render_field field class="input is-rounded is-medium" %}
+                {% if field.errors %}
+                    <span class="help is-danger">{{ field.errors }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}

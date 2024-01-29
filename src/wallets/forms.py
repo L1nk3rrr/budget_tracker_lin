@@ -1,16 +1,14 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, widgets
 
 from wallets.models import Wallet
 
 
-class WalletForm(ModelForm):
+class BaseWalletForm(ModelForm):
     class Meta:
         model = Wallet
         fields = (
             "name",
             "currency",
+            "balance",
+            "is_default",
         )
-
-    @staticmethod
-    def normalize_text(text: str) -> str:
-        return text.strip().capitalize()

@@ -15,6 +15,7 @@
                             <form action="{% url 'transactions:create_transaction' %}" method="post" class="">
                                 {% csrf_token %}
                                 <div class="field has-addons has-addons-centered">
+                                    <div class="field has-addons">
                                     <p class="control">
                                         <span class="select">
                                             <select name="wallet" id="item-type-input">
@@ -23,10 +24,17 @@
                                                 {% endfor %}
                                                 <option id="create-wallet-option"
                                                         value="{% url 'wallets:create_wallet' %}">Create a new one</option>
-
                                             </select>
+
                                         </span>
                                     </p>
+                                    <p class="control">
+                                        <a class="button" id="edit_wallet_button">✏️</a>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button" id="delete_wallet_button">❌</a>
+                                    </p>
+                                    </div>
                                     <p class="control">
                                         <span class="select">
                                             <select name="category"

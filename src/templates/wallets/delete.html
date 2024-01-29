@@ -2,16 +2,15 @@
 
 
 {% block main %}
-    <section class="hero is-primary">
+    <section class="hero is-primary is-fullheight">
         <div class="hero-body">
             <div class="container box">
-                <h1 class="title is-1 has-text-black has-text-centered"><b>Create Wallet</b></h1>
+                <h1 class="title is-1 has-text-black has-text-centered"><b>Do you want to delete wallet {{ wallet.name }}</b></h1>
                 <form method="POST" class="form">
                     {% csrf_token %}
-                    {% include "utils/form_field.html" with form=form %}
-                    <div class="field is-grouped">
+                    <div class="field is-grouped has-addons has-addons-centered">
                         <div class="control">
-                            <button class="button is-success" type="submit">Create</button>
+                            <button class="button is-danger" type="submit">Delete</button>
                         </div>
                         <div class="control">
                             <a href="{% url 'core:index' %}" class="button is-text">Cancel</a>

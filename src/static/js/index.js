@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const creditButton = document.getElementById("submit-credit");
     const debitButton = document.getElementById("submit-debit");
     const typeInput = document.getElementById("transaction-type");
+    const editWalletButton = document.getElementById("edit_wallet_button");
+    const deleteWalletButton = document.getElementById("delete_wallet_button");
+    const select = document.getElementById("item-type-input");
 
     creditButton.addEventListener("click", () => {
         typeInput.value = 1;
@@ -13,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         typeInput.value = 0;
     });
 
-    document.getElementById("item-type-input").addEventListener("change", function () {
+    select.addEventListener("change", function () {
         const createWalletOption = document.getElementById("create-wallet-option");
         if (this.selectedOptions[0].id === "create-wallet-option") {  // Check if the "Create New Wallet" option is selected
             window.location.href = `${window.location.origin}${this.value}`;  // Redirect to the create wallet URL
@@ -94,6 +97,19 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => {
                 console.error("Error creating transaction:", error);
             });
+    });
+
+    editWalletButton.addEventListener("click", () => {
+        const selectedWalletId = select.value;
+        if (selectedWalletId !== undefined) {
+            window.location.href = `${window.location.origin}/wallets/update/${selectedWalletId}`;
+        }
+    });
+    deleteWalletButton.addEventListener("click", () => {
+        const selectedWalletId = select.value;
+        if (selectedWalletId !== undefined) {
+            window.location.href = `${window.location.origin}/wallets/delete/${selectedWalletId}`;
+        }
     });
 
 });
