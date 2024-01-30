@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Your form submission code here
 
     const creditButton = document.getElementById("submit-credit");
     const debitButton = document.getElementById("submit-debit");
@@ -25,16 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
             const tbody = document.getElementById("transactions-table");
             tbody.innerHTML = '';
             // Send an AJAX request to get the transactions and balance for the selected wallet
-            fetch(`/transactions/by_wallet/${selectedWalletId}`)
+            fetch(`api/transactions/by_wallet/${selectedWalletId}`)
                 .then(response => response.json())
                 .then(data => {
 
                     data.transactions.forEach(transaction => {
                         const row = tbody.insertRow();
                         row.innerHTML = `
-                <td>${transaction.category}</td>
+                <td>${transaction.category_name}</td>
                 <td>${transaction.description}</td>
-                <td class="has-text-right">${transaction.amount}${transaction.sign}</td>
+                <td class="has-text-right">${transaction.wallet_sign}${transaction.amount}</td>
                 <td class="has-text-right">
                     <span class="icon remove-button">
                         <a href="#">
@@ -68,15 +67,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 if (data.success) {
                     const transactionData = data.transaction;  // Get transaction data from JSON response
-                    const sign = transactionData.sign;
+                    const wallet_sign = transactionData.wallet_sign;
 
                     // Create and populate a new table row with the received data
                     const tbody = document.getElementById("transactions-table");
                     const row = tbody.insertRow(0);
                     row.innerHTML = `
-                <td>${transactionData.category}</td>
+                <td>${transactionData.category_name}</td>
                 <td>${transactionData.description}</td>
-                <td class="has-text-right">${transactionData.amount}${transactionData.sign}</td>
+                <td class="has-text-right">${transactionData.wallet_sign}${transactionData.amount}</td>
                 <td class="has-text-right">
                     <span class="icon remove-button">
                         <a href="#">
@@ -87,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
                     this.reset();
                     document.getElementById("final-credit").textContent = data.wallet_balance;
-                    document.getElementById("sign").textContent = sign;
+                    document.getElementById("sign").textContent = wallet_sign;
                 } else {
                     for (const [key, value] of Object.entries(data.errors)) {
                         console.error("Error creating transaction:", `<p>${key}: ${value}</p>`)

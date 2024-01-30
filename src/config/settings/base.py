@@ -30,10 +30,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "phonenumber_field",
     "widget_tweaks",
+    "rest_framework",
+    "drf_yasg",
     "accounts",
     "core",
     "wallets",
     "transactions",
+    "api",
 ]
 
 MIDDLEWARE = [
