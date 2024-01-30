@@ -17,9 +17,14 @@ class Wallet(BaseModel):
     currency = models.ForeignKey(
         to="wallets.Currency", on_delete=models.SET_NULL, null=True
     )
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    is_default = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name} {self.currency.short_name}"
+
+    def get_balance(self):
+        return "%.2f" % self.balance
 
 
 class Currency(BaseModel):
