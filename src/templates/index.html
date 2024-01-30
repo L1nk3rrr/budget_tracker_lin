@@ -12,7 +12,7 @@
                 <div class="container box">
                     <div class="columns is-centered">
                         <div class="column is-8-tablet is-8-desktop is-8-widescreen">
-                            <form action="{% url 'transactions:create_transaction' %}" method="post" class="">
+                            <form action="{% url 'api:create_transaction' %}" method="post" class="">
                                 {% csrf_token %}
                                 <div class="field has-addons has-addons-centered">
                                     <div class="field has-addons">

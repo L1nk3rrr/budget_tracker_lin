@@ -32,16 +32,6 @@ class Transaction(BaseModel):
     def __str__(self):
         return f"{self.type}: {self.category.name} - {self.amount}"
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "description": self.description,
-            "category": str(self.category),
-            "amount": "%.2f" % self.amount,
-            "sign": self.wallet.currency.sign,
-            "type": self.type,
-        }
-
 
 class Category(models.Model):
     class Meta:
